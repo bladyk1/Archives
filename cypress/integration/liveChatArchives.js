@@ -5,7 +5,7 @@ describe('LiveChat Archives tests', () => {
     const archivesPage = new ArchivesPage()
 
     beforeEach(() => {
-        cy.visit('/archives')
+        cy.visit('/')
         archivesPage.authenticate('m.debski+frontend_tests@livechatinc.com','password')
     })
 
@@ -33,12 +33,27 @@ describe('LiveChat Archives tests', () => {
         archivesPage.validateArchivesByDate('Today')
     })
 
-    it('Verify last 30 days filter display correct archives', () => {
+    it('Verify last 30 days filter displays correct archives', () => {
         archivesPage.addFilterButtonClick()
         archivesPage.dateComboBoxClick()
         archivesPage.selectDateFilterPeriod('Last30days')
-        archivesPage.showChatsButtonClick()
         archivesPage.validateArchivesByDate('Last30days')
     })
+
+    it('Verify custom period filter displays correct archives', () => {
+        archivesPage.addFilterButtonClick()
+        archivesPage.dateComboBoxClick()
+        archivesPage.selectDateFilterCustomPeriod('2019-08-01','2020-01-10')
+        archivesPage.validateArchivesDateWithDataRange('2019-08-01','2020-01-10')
+    })
+
+    it('Verify tag filter displays correct archives', () => {
+        archivesPage.addFilterButtonClick()
+        archivesPage.tagComboBoxClick()
+        archivesPage.selectMultipleTagFilter('complaint','spam')
+        archivesPage.validateArchivesContainCorrectTags('complaint','spam')
+    })
+
+
 
 })
