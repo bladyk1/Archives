@@ -6,12 +6,12 @@ describe('LiveChat Archives tests', () => {
 
     beforeEach(() => {
         cy.visit('/')
-        archivesPage.authenticate('m.debski+frontend_tests@livechatinc.com','password')
+        archivesPage.authenticate('m.debski+frontend_tests@livechatinc.com','test1@3$')
     })
 
     it('Verify search bar functionality - case 1', () => {
         archivesPage.enterClientNameIntoSearchBoxField('client no1')
-        archivesPage.archiveElementsClick()
+        archivesPage.archiveElementClick()
         cy.get('.css-1w1vawl strong').should('have.text','Client no1')
     })
     
@@ -29,7 +29,6 @@ describe('LiveChat Archives tests', () => {
         archivesPage.addFilterButtonClick()
         archivesPage.dateComboBoxClick()
         archivesPage.selectDateFilterPeriod('Today')
-        archivesPage.showChatsButtonClick()
         archivesPage.validateArchivesByDate('Today')
     })
 

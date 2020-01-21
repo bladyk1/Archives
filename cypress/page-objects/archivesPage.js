@@ -11,12 +11,13 @@ export class ArchivesPage{
     enterClientNameIntoSearchBoxField(clientName){
         cy.get('input[placeholder="Search in archives…"]',{timeout:10000}).type(clientName)
     }
+    
 
     validateCorrectNumberOfArchivesReturned(number){
         cy.get('li[id^="archive-item-"] b', {timeout:5000}).should('have.length',number)
     }
 
-    archiveElementsClick(){
+    archiveElementClick(){
         cy.get('li[id^="archive-item-"] b',{timeout:1000}).contains('Client no1').click()
     }
 
@@ -53,11 +54,13 @@ export class ArchivesPage{
                 cy.get('li[id^="archive-item-"] div.css-quceq6').should('not.visible')
                 break
             case 'Last30days':
-                this.validateCorrectNumberOfArchivesReturned(1)
+                cy.get('li[id^="archive-item-"] div.css-quceq6').should('not.visible')
+                /* ------ if we expect 1 or more archives we should use below validation instead ------ */
+                /* this.validateCorrectNumberOfArchivesReturned(1)
                 cy.get('li[id^="archive-item-"] div.css-quceq6').each(($div) => {
                     const date = $div.eq(0).text()
                     expect(this.StrToTimestamp(date)).to.be.greaterThan(this.StrToTimestamp(Cypress.moment().subtract(30, 'days').calendar()))
-                })
+                }) */
                 break
             default:
                 cy.log('Sorry, parameter not found')
